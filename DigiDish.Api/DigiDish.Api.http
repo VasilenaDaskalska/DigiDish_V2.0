@@ -1,0 +1,6 @@
+@DigiDish.Api_HostAddress = http://localhost:7295
+
+GET {{DigiDish.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
