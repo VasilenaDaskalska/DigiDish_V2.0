@@ -1,0 +1,22 @@
+﻿<MudPaper Elevation="0"
+          Class="d-flex pa-4 tl-item flex-column align-center rounded-4"
+          Style="background: var(--mud-palette-white); border: 1px solid var(--mud-palette-white);"
+          MaxHeight="124px"
+          MaxWidth="222px"
+          MinHeight="52px"
+          Height="@(string.IsNullOrEmpty(this.Icon) ? "52px" : "124px")"
+          Width="222px"
+          Outlined="@this.Outlined"
+          @onclick="@this.OnClick">
+    @if (!string.IsNullOrEmpty(this.Icon))
+    {
+        <MudIcon Icon="@this.Icon"
+                 Color="@this.IconColor"
+                 Style="font-size: 64px;"></MudIcon>
+    }
+    <MudText Typo="@Typo.h5"
+             Color="@Color.Dark"
+             Style="text-align: center;">
+        @this.Title
+    </MudText>
+</MudPaper>

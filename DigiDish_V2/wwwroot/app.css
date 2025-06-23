@@ -1,0 +1,19 @@
+﻿.mud-navmenu, .mud-drawer-header {
+    background: #FFE8A3;
+    color: var(--mud-palette-white);
+    padding: 12px 0 !important;
+}
+
+.mud-navmenu {
+    padding: 12px 0 !important;
+}
+
+.mud-drawer{
+    background: #FFE8A3;
+}
+
+.mud-nav-link
+{
+    padding: 24px 12px 24px 12px !important; 
+    color: #333333;
+}

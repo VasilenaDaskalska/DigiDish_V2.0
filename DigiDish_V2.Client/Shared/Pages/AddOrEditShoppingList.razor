@@ -1,0 +1,50 @@
+﻿@page "/ShoppingList/{ShoppingListId:long}"
+@using MudBlazor
+
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-6">
+    <MudPaper Class="pa-6">
+        <MudGrid>
+            <MudItem xs="12" sm="8">
+                <MudTextField @bind-Value="@this.ShoppingList.Title"
+                              Label="Title"
+                              Variant="Variant.Outlined"
+                              Class="w-100" />
+            </MudItem>
+            <MudItem xs="12" sm="4" Class="d-flex align-center justify-end">
+                <MudFab Color="Color.Success"
+                        StartIcon="@Icons.Material.Filled.Check"
+                        OnClick="SaveShoppingList"
+                        Label="Save"
+                        Class="mr-2">
+                </MudFab>
+            </MudItem>
+        </MudGrid>
+
+        <MudDivider Class="my-4" />
+
+        <MudFab StartIcon="@Icons.Material.Filled.Add"
+                Color="@Color.Primary"
+                Class="align-self-start"
+                Label="Add Item"
+                Disabled="@this.isLoading" 
+                OnClick="@this.AddOrEditItemAsync"/>
+
+        <MudList T="ProductBiz" Dense="true" Class="mt-2">
+            @foreach (var item in this.ShoppingList.ShoppingListItems)
+            {
+                <MudListItem>
+                    <MudStack Row="true" Justify="@Justify.SpaceBetween">
+                        <MudText>@item.Name</MudText>
+                        <MudSpacer />
+                        <MudStack Row="true">
+                            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" OnClick="@(() => EditItem(item))" />
+                            <MudIconButton Icon="@Icons.Material.Filled.CheckBox" Color="Color.Success" />
+                        </MudStack>
+                    </MudStack>
+                </MudListItem>
+                <MudDivider />
+            }
+        </MudList>
+    </MudPaper>
+</MudContainer>

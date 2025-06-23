@@ -1,0 +1,101 @@
+@page "/SignUp"
+@using MudBlazor
+
+<div class="d-flex justify-center mb-8">
+    <MudImage Src="..\DogiDish_logo.png" Alt="DigiDish Logo" Width="200" />
+</div>
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center justify-center">
+    <MudPaper Elevation="0" Class="pa-8" Style="width: 500px;">
+        <MudForm @ref="form" @bind-IsValid="@success">
+            <div class="d-flex justify-center mb-4">
+                <MudAvatar Style="height: 100px; width: 100px; background-color: #A5BE7D;">
+                    @if (string.IsNullOrEmpty(ImageUrl))
+                    {
+                        <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Large" />
+                    }
+                    else
+                    {
+                        <MudImage Src="@ImageUrl" Alt="Profile picture" />
+                    }
+                </MudAvatar>
+            </div>
+            
+            <MudButton HtmlTag="label"
+                       Variant="Variant.Filled"
+                       Color="Color.Success"
+                       StartIcon="@Icons.Material.Filled.CloudUpload"
+                       for="fileInput"
+                       FullWidth="true"
+                       Class="mb-4">
+                Upload photo
+            </MudButton>
+            <InputFile id="fileInput" OnChange="UploadImage" hidden />
+
+            <MudTextField @bind-Value="FullName"
+                         Label="Full name"
+                         Variant="Variant.Outlined"
+                         Required="true"
+                         RequiredError="This field is required"
+                         Class="mb-3" />
+
+            <MudTextField @bind-Value="Username"
+                         Label="Username"
+                         Variant="Variant.Outlined"
+                         Required="true"
+                         RequiredError="This field is required"
+                         Class="mb-3" />
+
+            <MudTextField @bind-Value="PhoneNumber"
+                         Label="Phone number"
+                         Variant="Variant.Outlined"
+                         Required="true"
+                         RequiredError="This field is required"
+                         Class="mb-3" />
+
+            <MudTextField @bind-Value="Email"
+                         Label="E-mail"
+                         Variant="Variant.Outlined"
+                         Required="true"
+                         RequiredError="This field is required"
+                         Class="mb-3" />
+
+            <MudTextField @bind-Value="Password"
+                         Label="Password"
+                         Variant="Variant.Outlined"
+                         InputType="@passwordInput"
+                         Required="true"
+                         RequiredError="This field is required"
+                         Adornment="Adornment.End"
+                         AdornmentIcon="@passwordIcon"
+                         OnAdornmentClick="TogglePasswordVisibility"
+                         Class="mb-3" />
+
+            <MudTextField @bind-Value="ConfirmPassword"
+                         Label="Repeat password"
+                         Variant="Variant.Outlined"
+                         InputType="@passwordInput"
+                         Required="true"
+                         RequiredError="This field is required"
+                         Adornment="Adornment.End"
+                         AdornmentIcon="@passwordIcon"
+                         OnAdornmentClick="TogglePasswordVisibility"
+                         Class="mb-6" />
+
+            <div class="d-flex justify-space-between">
+                <MudButton Variant="Variant.Outlined"
+                          Color="Color.Success"
+                          OnClick="ClearFormAsync"
+                          Class="mr-2">
+                    Clear
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                          Color="Color.Success"
+                          OnClick="HandleSignUp">
+                    Sign up
+                </MudButton>
+            </div>
+        </MudForm>
+    </MudPaper>
+</MudContainer> 

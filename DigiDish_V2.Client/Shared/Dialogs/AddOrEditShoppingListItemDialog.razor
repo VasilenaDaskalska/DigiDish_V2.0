@@ -1,0 +1,39 @@
+﻿@using MudBlazor
+
+<MudDialog  ContentClass="mud-dialog-edit-content" Style="width: 250px">
+    <DialogContent>
+        <MudForm @ref="form" @bind-IsValid="@success">
+                <MudSelect T="long"
+                           @bind-Value="@this.ShoppingListItem.ID"
+                           Label="Select product"
+                           Variant="@Variant.Outlined"
+                           Required="true"
+                           RequiredError="This field is required"
+                           Class="mb-3">
+
+                    <MudSelectItem T="@long" Value="@(0)">Select product</MudSelectItem>
+
+                    @if (this.Products != null)
+                    {
+                        @foreach (var product in this.Products)
+                        {
+                            <MudSelectItem Value="@product.ID">@product.Name</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Outlined"
+                   Color="Color.Success"
+                   OnClick="CancelAsync">
+            Cancel
+        </MudButton>
+
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Success"
+                   OnClick="SaveAsync">
+            Save
+        </MudButton>
+    </DialogActions>
+</MudDialog>

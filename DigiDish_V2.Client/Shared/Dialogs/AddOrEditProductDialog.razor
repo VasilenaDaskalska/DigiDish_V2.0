@@ -1,0 +1,64 @@
+﻿@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="form" @bind-IsValid="@success">
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Product.Name"
+                                  Variant="@Variant.Outlined"
+                                  Label="Product name"
+                                  Required="true"
+                                  RequiredError="This field is required"
+                                  Class="mb-3" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudSelect T="long"
+                               @bind-Value="Product.MeasureID"
+                               Label="Select measure"
+                               Variant="@Variant.Outlined"
+                               Required="true"
+                               RequiredError="This field is required"
+                               Class="mb-3">
+
+                        <MudSelectItem T="@long" Value="@(0)">Select measure</MudSelectItem>
+
+                        @if (Measures != null)
+                        {
+                            @foreach (var measure in Measures)
+                            {
+                                <MudSelectItem Value="@measure.ID">@measure.ShortName</MudSelectItem>
+                            }
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Product.Quantity"
+                                  Label="Quantity"
+                                  Class="mb-3"
+                                  Variant="@Variant.Outlined"
+                                  InputType="@InputType.Number" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Product.Calories"
+                                  Label="Calories"
+                                  Class="mb-3"
+                                   Variant="@Variant.Outlined"
+                                  InputType="@InputType.Number" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Outlined"
+                   Color="Color.Default"
+                   OnClick="CancelAsync">
+            Cancel
+        </MudButton>
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Success"
+                   OnClick="SaveAsync">
+            Save
+        </MudButton>
+    </DialogActions>
+</MudDialog>

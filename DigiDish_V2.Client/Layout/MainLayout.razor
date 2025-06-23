@@ -1,0 +1,231 @@
+﻿@inherits LayoutComponentBase
+@inject UserState UserState
+@inject NavigationManager NavigationManager
+<MudThemeProvider Theme="@_theme" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudLayout>
+    <MudAppBar Elevation="1" Dense="@true">
+        <MudSpacer />
+        @if (UserState.IsAuthenticated)
+        {
+            <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Default" Edge="Edge.End" OnClick="@HandleLogout" />
+        }
+
+    </MudAppBar>
+    <MudDrawer @bind-Open="@this.isDrawerOpen"
+               Elevation="2"
+               Variant="@DrawerVariant.Mini"
+               OpenMiniOnHover="@true"
+               OverlayAutoClose="@true">
+        <MudDrawerHeader>
+            <MudStack Row="@true">
+                <div class="mx-auto">
+                    @if (this.isDrawerOpen)
+                    {
+                        <img class="mx-auto my-auto p-2"
+                             style="width: 200px; height: 100px;"
+                             src="DogiDish_logo.png" />
+                    }
+                    else
+                    {
+                        <img class="mx-auto my-auto p-2"
+                             style="width: 50px; height: 50px;"
+                             src="DigiDish_logo_short.png" />
+                    }
+                </div>
+            </MudStack>
+        </MudDrawerHeader>
+        @if (UserState.IsAuthenticated)
+        {
+            <NavMenu />
+        }
+        else
+        {
+            <MudNavMenu>
+                <MudNavLink Href="/SignUp" Icon="@Icons.Material.Filled.ArrowBack" IconColor="Color.Default">Sign up</MudNavLink>
+
+                <MudNavLink OnClick="@HandleLogout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Default">Sign out</MudNavLink>
+            </MudNavMenu>
+        }
+
+    </MudDrawer>
+    <MudMainContent Class="pt-16 pa-4">
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>
+
+@code {
+    private bool isDrawerOpen = false;
+    private MudTheme? _theme = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await UserState.InitializeAsync();
+        UserState.OnUserChanged += StateHasChanged;
+
+        if(UserState.IsAuthenticated)
+        {
+            this.NavigationManager.NavigateTo("/Dashboard");
+        }
+
+        _theme = new()
+        {
+            PaletteLight = _lightPalette,
+            Typography = new Typography()
+            {
+                H1 = new H1Typography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "32px",
+                    FontWeight = "800",
+                    LineHeight = "40px",
+                    LetterSpacing = "0px",
+                },
+                H2 = new H2Typography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "24px",
+                    FontWeight = "800",
+                    LineHeight = "30px",
+                },
+                H3 = new H3Typography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "20px",
+                    FontWeight = "800",
+                    LineHeight = "25px",
+                },
+                H4 = new H4Typography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "18px",
+                    FontWeight = "800",
+                    LineHeight = "24px",
+                    LetterSpacing = "0px",
+                },
+                H5 = new H5Typography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "16px",
+                    FontWeight = "800",
+                    LineHeight = "20px",
+                },
+                H6 = new H6Typography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "14px",
+                    FontWeight = "800",
+                    LineHeight = "18px",
+                },
+                Body1 = new Body1Typography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "20px",
+                    FontWeight = "400",
+                    LineHeight = "25px",
+                },
+                Body2 = new Body2Typography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "18px",
+                    FontWeight = "400",
+                    LineHeight = "23px",
+                },
+                Subtitle1 = new Subtitle1Typography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "16px",
+                    FontWeight = "400",
+                    LineHeight = "20px",
+                },
+                Subtitle2 = new Subtitle2Typography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "14px",
+                    FontWeight = "400",
+                    LineHeight = "18px",
+                },
+                Default = new DefaultTypography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "13px",
+                    FontWeight = "400",
+                    LineHeight = "16px",
+                },
+                Button = new ButtonTypography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "16px",
+                    FontWeight = "700",
+                    LineHeight = "20px",
+                    LetterSpacing = "0px",
+                    TextTransform = "none",
+                },
+                Overline = new OverlineTypography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "10px",
+                    FontWeight = "800",
+                    LetterSpacing = "1.3px",
+                    LineHeight = "14px",
+                },
+                Caption = new CaptionTypography()
+                {
+                    FontFamily = new[] { "Poppins", "Segoe UI", "Roboto", "sans-serif" },
+                    FontSize = "14px",
+                    FontWeight = "400",
+                    LineHeight = "18px",
+                },
+            },
+            LayoutProperties = new LayoutProperties()
+            {
+                DefaultBorderRadius = "8px",
+                AppbarHeight = "72px",
+            },
+        };
+    }
+
+    private readonly PaletteLight _lightPalette = new()
+    {
+        Black = "#181818",
+        White = "#FFFFFF",
+        Primary = "#A8C686",
+        Secondary = "#D97D54",
+        Background = "#FAF5E9",
+        Surface = "#FFFFFF",
+        AppbarBackground = "#FFFECE",
+        DrawerBackground = "#FFE8A3",
+        DrawerText = "#333333",
+        TextPrimary = "#333333",
+        TextSecondary = "#6A7BA2",
+        ActionDefault = "#C5C5C5",
+        Success = "#A8C686",
+        Info = "#6A7BA2",
+        Warning = "#FFE8A3",
+        Error = "#D97D54",
+        BackgroundGray = "FAF5E9",
+    };
+
+    private async Task HandleLogout()
+    {
+        await UserState.LogoutAsync();
+    }
+
+    public void Dispose()
+    {
+        UserState.OnUserChanged -= StateHasChanged;
+    }
+}
+
+

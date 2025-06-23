@@ -1,0 +1,42 @@
+﻿@page "/SignIn"
+@using MudBlazor
+
+<div class="d-flex justify-center mb-8">
+    <MudImage Src="..\DogiDish_logo.png" Alt="DigiDish Logo" Width="200" />
+</div>
+<MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center justify-center" Style="height: 350px;">
+    <MudPaper Elevation="0" Class="pa-8" Style="width: 500px;">
+        <MudForm @ref="form" @bind-IsValid="@success">
+            <MudTextField @bind-Value="Username"
+                          Label="Username or E-mail"
+                          Variant="Variant.Outlined"
+                          Required="true"
+                          RequiredError="This field is required"
+                          Class="mb-3" />
+
+            <MudTextField @bind-Value="Password"
+                          Label="Password"
+                          Variant="Variant.Outlined"
+                          InputType="@passwordInput"
+                          Required="true"
+                          RequiredError="This field is required"
+                          Adornment="Adornment.End"
+                          AdornmentIcon="@passwordIcon"
+                          OnAdornmentClick="TogglePasswordVisibility"
+                          Class="mb-6" />
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Success"
+                       FullWidth="true"
+                       Size="Size.Large"
+                       Class="mb-3"
+                       OnClick="HandleSignIn">Sign in</MudButton>
+
+            <MudButton Variant="Variant.Outlined"
+                       Color="Color.Success"
+                       FullWidth="true"
+                       Size="Size.Large"
+                       Href="/SignUp">Sign up</MudButton>
+        </MudForm>
+    </MudPaper>
+</MudContainer>

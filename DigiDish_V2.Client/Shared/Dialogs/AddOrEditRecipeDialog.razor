@@ -1,0 +1,74 @@
+﻿@using MudBlazor
+
+<MudDialog Style="width: 60%">
+    <DialogContent>
+        <MudForm @ref="form" @bind-IsValid="@success">
+            <MudStack Row="true">
+                <MudItem xs="10" lg="10">
+                    <MudTextField @bind-Value="@this.Recipe.Name"
+                                  Label="Name"
+                                  Variant="Variant.Outlined"
+                                  Required="true"
+                                  RequiredError="This field is required"
+                                  Class="mb-3" />
+                </MudItem>
+                <MudItem xs="2" lg="2">
+                    <MudTooltip Text="Add product/s to recipe">
+                        <MudFab Color="Color.Success"
+                                Class="mt-2"
+                                OnClick="@AddProductToRecipe"
+                                StartIcon="@Icons.Material.Filled.Add">
+                        </MudFab>
+                    </MudTooltip>
+                </MudItem>
+            </MudStack>
+
+
+            <MudItem xs="12">
+                @if (this.Recipe.RecipeItems != null)
+                {
+                    <MudText Typo="@Typo.h6">Products</MudText>
+
+                    foreach (var item in this.Recipe.RecipeItems)
+                    {
+                        <MudChip T="string" Color="Color.Success">@item.Name</MudChip>
+                    }
+                }
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@this.Recipe.Description"
+                              Label="Desctiption"
+                              Lines="5"
+                              Variant="Variant.Outlined"
+                              Class="mb-3" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@this.Recipe.Note"
+                              Lines="2"
+                              Label="Note"
+                              Variant="Variant.Outlined"
+                              Class="mb-3" />
+            </MudItem>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudStack Row="@true" Justify="@Justify.SpaceBetween">
+
+            <MudStack Row="@true">
+                <MudButton Variant="Variant.Outlined"
+                           Color="Color.Success"
+                           OnClick="CancelAsync">
+                    Cancel
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Success"
+                           OnClick="@SaveAsync">
+                    Save
+                </MudButton>
+            </MudStack>
+        </MudStack>
+    </DialogActions>
+</MudDialog>

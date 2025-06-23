@@ -1,0 +1,45 @@
+﻿@using MudBlazor
+
+<MudDialog Style="width: 260px">
+    <DialogContent>
+
+        <MudStack>
+            <MudItem xs="12">
+                <div class="align-center ml-12">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Success" Disabled="true" Class="mb-4" Style="pointer-events:none;">
+                        Products
+                    </MudButton>
+                </div>
+            </MudItem>
+            <MudItem xs="12" Class="align-right">
+                <MudLink Color="@Color.Success"
+                         OnClick="@AddProductAsync">
+                    <MudIcon Icon="@Icons.Material.Filled.Add">
+
+                    </MudIcon>
+                    Add product
+                </MudLink>
+            </MudItem>
+            <MudItem xs="12">
+                <div class="d-flex flex-column align-left">
+                    <MudList T="ProductSelectionModel" Dense="true" Class="mb-4">
+                        @foreach (var product in Products)
+                        {
+                            <MudListItem>
+                                <MudStack Row="true">
+                                    <MudCheckBox T="bool" @bind-Value="product.IsSelected" Color="Color.Success" />
+                                    <MudText Class="ml-4 mt-2">@product.Name</MudText>
+                                </MudStack>
+
+                            </MudListItem>
+                        }
+                    </MudList>
+                </div>
+            </MudItem>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save">Save</MudButton>
+    </DialogActions>
+</MudDialog>

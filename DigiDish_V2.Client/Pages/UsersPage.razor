@@ -1,0 +1,85 @@
+﻿@page "/Users"
+
+@if (this.UserState.CurrentUser?.UserPermissions == DigiDish.BusinessModels.ENUMS.PERMISSIONS.Admin)
+{
+    @if (!this.isLoading && Users != null)
+    {
+        <MudPaper Class="d-flex flex-wrap px-2 py-4"
+                  Style="border-radius: var(--mud-default-borderradius) var(--mud-default-borderradius) 0px 0px;">
+        </MudPaper>
+        <MudDataGrid T="UserBiz"
+                     Breakpoint="@Breakpoint.Sm"
+                     Dense="@true"
+                     Striped="@true"
+                     Loading="@this.isSearching"
+                     LoadingProgressColor="@Color.Primary"
+                     Hover="@true"
+                     Filterable="@true"
+                     Items="@this.Users"
+                     SelectedItem="@this.SelectedUser"
+                     Style="border-radius: 0px 0px var(--mud-default-borderradius) var(--mud-default-borderradius);">
+            <ColGroup>
+                <col>
+                <col>
+                <col>
+                <col style="width: 24px;">
+            </ColGroup>
+            <Columns>
+                <PropertyColumn Property="x => x.Name"
+                                Sortable="@true"
+                                Title="Name" />
+                <PropertyColumn Property="x => x.UserName"
+                                Sortable="@true"
+                                Title="Username" />
+                <PropertyColumn Property="x => x.Email"
+                                Sortable="@true"
+                                Title="E-mail" />
+                <TemplateColumn CellClass="d-flex justify-end"
+                                Sortable="false">
+                    <HeaderTemplate>
+                        <MudIcon Icon="@Icons.Material.Outlined.Settings"
+                                 Class="ml-auto mr-3" />
+                    </HeaderTemplate>
+                    <CellTemplate>
+                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
+                                 Color="@Color.Success"
+                                 AnchorOrigin="@Origin.BottomCenter"
+                                 Dense="@true">
+                            <MudMenuItem>
+                                <div class="d-flex">
+                                    <MudIcon Icon="@Icons.Material.Filled.Edit"
+                                             Color="@Color.Dark"
+                                             Size="@Size.Small" />
+                                    <MudText Class="ml-2"
+                                             Typo="@Typo.subtitle2">
+                                        Edit
+                                    </MudText>
+                                </div>
+                            </MudMenuItem>
+                            <MudDivider />
+                            <MudMenuItem>
+                                <div class="d-flex">
+                                    <MudIcon Icon="@Icons.Material.Filled.Delete"
+                                             Color="@Color.Dark"
+                                             Size="@Size.Small" />
+                                    <MudText Class="ml-2"
+                                             Typo="@Typo.subtitle2">
+                                        Delete
+                                    </MudText>
+                                </div>
+                            </MudMenuItem>
+                        </MudMenu>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="UserBiz" />
+            </PagerContent>
+        </MudDataGrid>
+    }
+}
+else
+{
+    <MudText Align="@Align.Center"
+             Typo="@Typo.h1"> Sorry! You don't have permissions for this page</MudText>
+}

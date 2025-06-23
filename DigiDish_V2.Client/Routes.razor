@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Components.Routing
+
+<Router AppAssembly="typeof(Program).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="typeof(Layout.MainLayout)">
+            @{
+                NavigationManager.NavigateTo("/SignIn");
+            }
+        </LayoutView>
+    </NotFound>
+</Router>
+
+@code {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // Redirect to SignIn if we're at the root URL
+        if (NavigationManager.Uri.EndsWith(NavigationManager.BaseUri))
+        {
+            NavigationManager.NavigateTo("/SignIn");
+        }
+    }
+}

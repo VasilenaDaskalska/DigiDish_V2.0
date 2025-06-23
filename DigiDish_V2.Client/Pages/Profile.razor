@@ -1,0 +1,95 @@
+﻿@page "/Profile"
+@using MudBlazor
+@using Microsoft.AspNetCore.Components.Forms
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center justify-center mt-8">
+    <MudPaper Elevation="0" Class="pa-8" Style="width: 500px;">
+
+        @if (this.CurrentUser != null)
+        {
+            <MudForm @ref="form" @bind-IsValid="@success">
+                <div class="d-flex justify-center mb-4">
+                    <MudAvatar Style="height: 100px; width: 100px; background-color: #A5BE7D;">
+                        @if (this.CurrentUser?.ProfilePhoto == null && this.imageData == null)
+                        {
+                            <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Large" />
+                        }
+                        else
+                        {
+                            <MudImage Src="@GetImageUrl()" 
+                                     Alt="Profile picture" 
+                                     ObjectFit="ObjectFit.Cover"
+                                     Width="100"
+                                     Height="100" />
+                        }
+                    </MudAvatar>
+                </div>
+
+                <MudButton HtmlTag="label"
+                           Variant="Variant.Filled"
+                           Color="Color.Success"
+                           StartIcon="@Icons.Material.Filled.PhotoCamera"
+                           for="profilePhotoInput"
+                           FullWidth="true"
+                           Class="mb-6">
+                    Change profile picture
+                </MudButton>
+                <InputFile id="profilePhotoInput" 
+                          OnChange="UploadImage" 
+                          hidden
+                          accept=".jpg,.jpeg,.png" />
+
+
+                <MudTextField @bind-Value="@this.CurrentUser.Name"
+                              Label="Full name"
+                              Variant="Variant.Outlined"
+                              Required="true"
+                              RequiredError="This field is required"
+                              Class="mb-3" />
+
+                <MudTextField @bind-Value="@this.CurrentUser.UserName"
+                              Label="Username"
+                              Variant="Variant.Outlined"
+                              Required="true"
+                              RequiredError="This field is required"
+                              Class="mb-3" />
+
+                <MudTextField @bind-Value="@this.CurrentUser.PhoneNumber"
+                              Label="Phone number"
+                              Variant="Variant.Outlined"
+                              Required="true"
+                              RequiredError="This field is required"
+                              Class="mb-3" />
+
+                <MudTextField @bind-Value="@this.CurrentUser.Email"
+                              Label="E-mail"
+                              Variant="Variant.Outlined"
+                              Required="true"
+                              RequiredError="This field is required"
+                              Class="mb-3" />
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Success"
+                           FullWidth="true"
+                           OnClick="ChangePasswordAsync"
+                           Class="mb-6">
+                    Change password
+                </MudButton>
+
+                <div class="d-flex justify-space-between">
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Success"
+                               OnClick="ClearFormAsync">
+                        Clear
+                    </MudButton>
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Success"
+                               OnClick="SaveChangesAsync">
+                        Save
+                    </MudButton>
+                </div>
+            </MudForm>
+        }
+    </MudPaper>
+</MudContainer>

@@ -1,0 +1,34 @@
+﻿@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="form" @bind-IsValid="@success">
+            <MudTextField @bind-Value="@this.Measure.Name"
+                          Label="Measure name"
+                          Variant="Variant.Outlined"
+                          Required="true"
+                          RequiredError="This field is required"
+                          Class="mb-3" />
+
+            <MudTextField @bind-Value="@this.Measure.ShortName"
+                          Label="Measure short name"
+                          Variant="Variant.Outlined"
+                          Required="true"
+                          RequiredError="This field is required"
+                          Class="mb-3" />
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Outlined"
+                   Color="Color.Success"
+                   OnClick="CancelAsync">
+            Cancel
+        </MudButton>
+
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Success"
+                   OnClick="SaveAsync">
+            Save
+        </MudButton>
+    </DialogActions>
+</MudDialog>

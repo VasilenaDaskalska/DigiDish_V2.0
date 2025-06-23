@@ -1,0 +1,89 @@
+﻿@page "/Dashboard"
+@inject UserState UserState
+@inject NavigationManager NavigationManager
+
+
+<div class="d-flex flex-column align-center mt-12 mb-8">
+    <MudText Typo="@Typo.body1">@(DateTime.Now.ToString("dddd, d MMMM"))</MudText>
+    <MudText Typo="@Typo.h1">Welcome, @this.UserState?.CurrentUser?.Name</MudText>
+</div>
+
+<MudGrid Spacing="0" Justify="@Justify.SpaceBetween" Class="pa-4">
+    <MudItem xs="12">
+        <MudStack Spacing="4"
+                  Justify="@Justify.Center"
+                  AlignItems="@AlignItems.Center"
+                  Row="@true"
+                  Wrap="@Wrap.Wrap">
+
+            <ActionBadge Icon="@Icons.Material.Filled.Label"
+                         OnClick="@OpenMeasures"
+                         IconColor="@Color.Success"
+                         Outlined="@true"
+                         Title="Measures">
+
+            </ActionBadge>
+
+            <ActionBadge Icon="@Icons.Material.Filled.Inventory"
+                         OnClick="@OpenProducts"
+                         IconColor="@Color.Success"
+                         Outlined="@true"
+                         Title="Products">
+
+            </ActionBadge>
+
+
+            <ActionBadge Icon="@Icons.Material.Filled.Feed"
+                         OnClick="@OpenRecipes"
+                         IconColor="@Color.Success"
+                         Outlined="true"
+                         Title="Recipes">
+
+            </ActionBadge>
+        </MudStack>
+
+    </MudItem>
+    <MudItem xs="12" Class="mt-12">
+        <MudStack Spacing="4"
+                  Justify="@Justify.Center"
+                  AlignItems="@AlignItems.Center"
+                  Row="@true"
+                  Wrap="@Wrap.Wrap">
+
+            <ActionBadge Icon="@Icons.Material.Filled.LocalGroceryStore"
+                         OnClick="@OpenShoppingList"
+                         IconColor="@Color.Success"
+                         Outlined="@true"
+                         Title="Shipping list">
+
+            </ActionBadge>
+
+            <ActionBadge Icon="@Icons.Material.Filled.PermIdentity"
+                         OnClick="@OpenProfile"
+                         IconColor="@Color.Success"
+                         Outlined="@true"
+                         Title="Profile">
+
+            </ActionBadge>
+
+            @if (this.UserState.CurrentUser?.UserPermissions == DigiDish.BusinessModels.ENUMS.PERMISSIONS.Admin)
+            {
+                <ActionBadge Icon="@Icons.Material.Filled.Accessibility"
+                             OnClick="@OpenUsers"
+                             Outlined="@true"
+                             IconColor="@Color.Success"
+                             Title="Users">
+
+                </ActionBadge>
+            }
+
+            <ActionBadge Icon="@Icons.Material.Filled.Logout"
+                         OnClick="@UserState.LogoutAsync"
+                         Outlined="@true"
+                         IconColor="@Color.Success"
+                         Title="Sign out">
+
+            </ActionBadge>
+        </MudStack>
+    </MudItem>
+</MudGrid>

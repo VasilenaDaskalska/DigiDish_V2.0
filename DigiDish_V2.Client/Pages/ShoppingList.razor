@@ -1,0 +1,78 @@
+﻿@page "/ShoppingLists"
+
+@if (!this.isLoading && ShoppingLists != null)
+{
+    <MudPaper Class="d-flex flex-wrap px-2 py-4"
+              Style="border-radius: var(--mud-default-borderradius) var(--mud-default-borderradius) 0px 0px;">
+        <MudFab StartIcon="@Icons.Material.Filled.Add"
+                Color="@Color.Primary"
+                Class="align-self-start"
+                Label="Add shopping list"
+                OnClick="@(async _ => await this.AddOrEditShoppingList(0))"
+                Disabled="@this.isLoading" />
+    </MudPaper>
+    <MudDataGrid T="ShoppingListBiz"
+                 Breakpoint="@Breakpoint.Sm"
+                 Dense="@true"
+                 Striped="@true"
+                 Loading="@this.isSearching"
+                 LoadingProgressColor="@Color.Primary"
+                 Hover="@true"
+                 Filterable="@true"
+                 Items="@this.ShoppingLists"
+                 SelectedItem="@this.selectedShoppingList"
+                 Style="border-radius: 0px 0px var(--mud-default-borderradius) var(--mud-default-borderradius);">
+        <ColGroup>
+            <col>
+            <col>
+            <col>
+            <col style="width: 24px;">
+        </ColGroup>
+        <Columns>
+            <PropertyColumn Property="x => x.Title"
+                            Sortable="@true"
+                            Title="Title" />
+
+            <TemplateColumn CellClass="d-flex justify-end"
+                            Sortable="false">
+                <HeaderTemplate>
+                    <MudIcon Icon="@Icons.Material.Outlined.Settings"
+                             Class="ml-auto mr-3" />
+                </HeaderTemplate>
+                <CellTemplate>
+                    <MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
+                             Color="@Color.Success"
+                             AnchorOrigin="@Origin.BottomCenter"
+                             Dense="@true">
+                        <MudMenuItem OnClick="@(async _ => await this.AddOrEditShoppingList(context.Item.ID))">
+                            <div class="d-flex">
+                                <MudIcon Icon="@Icons.Material.Filled.Edit"
+                                         Color="@Color.Dark"
+                                         Size="@Size.Small" />
+                                <MudText Class="ml-2"
+                                         Typo="@Typo.subtitle2">
+                                    Edit
+                                </MudText>
+                            </div>
+                        </MudMenuItem>
+                        <MudDivider />
+                        <MudMenuItem  OnClick="@(async _ => await this.DeleteShoppingAsync(context.Item.ID))">
+                            <div class="d-flex">
+                                <MudIcon Icon="@Icons.Material.Filled.Delete"
+                                         Color="@Color.Dark"
+                                         Size="@Size.Small" />
+                                <MudText Class="ml-2"
+                                         Typo="@Typo.subtitle2">
+                                    Delete
+                                </MudText>
+                            </div>
+                        </MudMenuItem>
+                    </MudMenu>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="ShoppingListBiz" />
+        </PagerContent>
+    </MudDataGrid>
+}
